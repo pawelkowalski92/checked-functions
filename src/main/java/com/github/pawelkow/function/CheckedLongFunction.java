@@ -20,7 +20,7 @@ public interface CheckedLongFunction<R, X extends Exception> extends LongFunctio
     }
 
     @Override
-    default LongFunction<R> handleException(ReferenceResolver<R> handler) {
+    default LongFunction<R> handleException(ReferenceResolver<? extends R> handler) {
         return value -> {
             try {
                 return applyWithException(value);

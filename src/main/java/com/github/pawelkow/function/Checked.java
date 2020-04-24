@@ -155,7 +155,7 @@ public interface Checked<F, X extends Exception> {
          * @param resolver {@link ReferenceResolver exception resolver} capable of providing object references as fallback values
          * @return enhanced {@link F interface}
          */
-        F handleException(ReferenceResolver<R> resolver);
+        F handleException(ReferenceResolver<? extends R> resolver);
 
     }
 

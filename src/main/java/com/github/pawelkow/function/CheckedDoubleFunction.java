@@ -20,7 +20,7 @@ public interface CheckedDoubleFunction<R, X extends Exception> extends DoubleFun
     }
 
     @Override
-    default DoubleFunction<R> handleException(ReferenceResolver<R> handler) {
+    default DoubleFunction<R> handleException(ReferenceResolver<? extends R> handler) {
         return value -> {
             try {
                 return applyWithException(value);

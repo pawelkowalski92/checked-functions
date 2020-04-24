@@ -20,7 +20,7 @@ public interface CheckedIntFunction<R, X extends Exception> extends IntFunction<
     }
 
     @Override
-    default IntFunction<R> handleException(ReferenceResolver<R> handler) {
+    default IntFunction<R> handleException(ReferenceResolver<? extends R> handler) {
         return value -> {
             try {
                 return applyWithException(value);

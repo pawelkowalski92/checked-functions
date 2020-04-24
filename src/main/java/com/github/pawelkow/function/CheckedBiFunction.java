@@ -20,7 +20,7 @@ public interface CheckedBiFunction<T, U, R, X extends Exception> extends BiFunct
     }
 
     @Override
-    default BiFunction<T, U, R> handleException(ReferenceResolver<R> handler) {
+    default BiFunction<T, U, R> handleException(ReferenceResolver<? extends R> handler) {
         return (t, u) -> {
             try {
                 return applyWithException(t, u);

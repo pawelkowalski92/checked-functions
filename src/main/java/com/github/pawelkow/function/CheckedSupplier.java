@@ -20,7 +20,7 @@ public interface CheckedSupplier<T, X extends Exception> extends Supplier<T>, Ch
     }
 
     @Override
-    default Supplier<T> handleException(ReferenceResolver<T> handler) {
+    default Supplier<T> handleException(ReferenceResolver<? extends T> handler) {
         return () -> {
             try {
                 return getWithException();

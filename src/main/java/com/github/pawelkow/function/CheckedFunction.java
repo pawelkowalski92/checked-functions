@@ -20,7 +20,7 @@ public interface CheckedFunction<T, R, X extends Exception> extends Function<T, 
     }
 
     @Override
-    default Function<T, R> handleException(ReferenceResolver<R> handler) {
+    default Function<T, R> handleException(ReferenceResolver<? extends R> handler) {
         return t -> {
             try {
                 return applyWithException(t);
