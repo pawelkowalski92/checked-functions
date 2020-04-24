@@ -3,6 +3,7 @@ package com.github.pawelkow.function;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -35,7 +36,7 @@ public class CheckedSupplierTest {
         List<String> strings = new ArrayList<>();
 
         //then
-        assertThrows(UnhandledCheckedException.class, () -> strings.add(supplier.get()));
+        assertThrows(UncheckedIOException.class, () -> strings.add(supplier.get()));
         assertTrue(strings.isEmpty());
     }
 

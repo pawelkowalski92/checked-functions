@@ -3,6 +3,7 @@ package com.github.pawelkow.function;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -31,7 +32,7 @@ public class CheckedPredicateTest {
         Optional<Object> argument = Optional.of("test");
 
         //then
-        assertThrows(UnhandledCheckedException.class, () -> argument.filter(predicate));
+        assertThrows(UncheckedIOException.class, () -> argument.filter(predicate));
     }
 
     @Test

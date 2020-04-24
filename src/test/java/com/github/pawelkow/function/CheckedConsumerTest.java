@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.io.UncheckedIOException;
 import java.text.MessageFormat;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -40,7 +41,7 @@ public class CheckedConsumerTest {
         Optional<Object> argument = Optional.of("test");
 
         //then
-        assertThrows(UnhandledCheckedException.class, () -> argument.ifPresent(consumer));
+        assertThrows(UncheckedIOException.class, () -> argument.ifPresent(consumer));
         assertTrue(loggingContainer.toString().isEmpty());
     }
 

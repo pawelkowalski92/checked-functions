@@ -3,6 +3,7 @@ package com.github.pawelkow.function;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.util.OptionalLong;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
@@ -33,7 +34,7 @@ public class CheckedToLongFunctionTest {
                 .mapToLong(mapper);
 
         //then
-        assertThrows(UnhandledCheckedException.class, arguments::findFirst);
+        assertThrows(UncheckedIOException.class, arguments::findFirst);
     }
 
     @Test
