@@ -1,4 +1,4 @@
 /**
- * Extension of standard {@link java.lang.FunctionalInterface functional interfaces} package that supports checked exceptions.
+ * Extension of standard functional interfaces that support checked exceptions.
  */
 package com.github.pawelkow.function;

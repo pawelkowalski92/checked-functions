@@ -17,7 +17,13 @@ import java.util.function.*;
 public interface Checked<F, X extends Exception> {
 
     /**
-     * Default behavior for consuming checked exception: rethrow as unchecked.
+     * Default behavior for consuming encountered exceptions:
+     *  <ul>
+     *     <li>if exception type is subtype of {@link RuntimeException}, rethrow it as is</li>
+     *     <li>if exception type is subtype of {@link IOException}, rethrow it as {@link UncheckedIOException}</li>
+     *     <li>otherwise rethrow it as {@link UnhandledCheckedException}</li>
+     *  </ul>
+     * NOTE: if exception type is subtype of {@link InterruptedException}, interruption status will be setup on calling thread
      */
     Consumer<Exception> RETHROW_UNCHECKED = ex -> {
         if (ex instanceof RuntimeException) {
@@ -120,15 +126,15 @@ public interface Checked<F, X extends Exception> {
          * <pre>
          *  handleException(new ReferenceHandler&lt;R&gt;()
          *      .&lt;X&gt;inCaseOfGeneric()
-         *      .supplyDefault(defaultValueSupplier)
+         *      .supplyDefault(fallbackValueSupplier)
          *  );
          * </pre>
          *
-         * @param defaultValueSupplier {@link Supplier} providing value to be returned
+         * @param fallbackValueSupplier {@link Supplier} providing value to be returned
          * @return enhanced {@link F interface}
          */
-        default F supplyValue(Supplier<? extends R> defaultValueSupplier) {
-            return handleException(new ReferenceHandler<R>().<X>inCaseOfGeneric().supplyDefault(defaultValueSupplier));
+        default F supplyFallback(Supplier<? extends R> fallbackValueSupplier) {
+            return handleException(new ReferenceHandler<R>().<X>inCaseOfGeneric().supplyDefault(fallbackValueSupplier));
         }
 
         /**
@@ -138,15 +144,15 @@ public interface Checked<F, X extends Exception> {
          * <pre>
          *  handleException(new ReferenceHandler&lt;R&gt;()
          *      .&lt;X&gt;inCaseOfGeneric()
-         *      .returnDefault(defaultValue)
+         *      .returnDefault(fallbackValue)
          *  );
          * </pre>
          *
-         * @param defaultValue value to be returned
+         * @param fallbackValue value to be returned
          * @return enhanced {@link F interface}
          */
-        default F returnValue(R defaultValue) {
-            return handleException(new ReferenceHandler<R>().<X>inCaseOfGeneric().returnDefault(defaultValue));
+        default F returnFallback(R fallbackValue) {
+            return handleException(new ReferenceHandler<R>().<X>inCaseOfGeneric().returnDefault(fallbackValue));
         }
 
         /**
@@ -227,11 +233,11 @@ public interface Checked<F, X extends Exception> {
          *  );
          * </pre>
          *
-         * @param defaultValueSupplier {@link IntSupplier} providing value to be returned
+         * @param fallbackValueSupplier {@link IntSupplier} providing value to be returned
          * @return enhanced {@link F interface}
          */
-        default F supplyInt(IntSupplier defaultValueSupplier) {
-            return handleException(new IntHandler().<X>inCaseOfGeneric().supplyDefault(defaultValueSupplier));
+        default F supplyFallback(IntSupplier fallbackValueSupplier) {
+            return handleException(new IntHandler().<X>inCaseOfGeneric().supplyDefault(fallbackValueSupplier));
         }
 
         /**
@@ -241,15 +247,15 @@ public interface Checked<F, X extends Exception> {
          * <pre>
          *  handleException(new IntHandler()
          *      .&lt;X&gt;inCaseOfGeneric()
-         *      .returnDefault(defaultValue)
+         *      .returnDefault(fallbackValue)
          *  );
          * </pre>
          *
-         * @param defaultValue value to be returned
+         * @param fallbackValue value to be returned
          * @return enhanced {@link F interface}
          */
-        default F returnInt(int defaultValue) {
-            return handleException(new IntHandler().<X>inCaseOfGeneric().returnDefault(defaultValue));
+        default F returnFallback(int fallbackValue) {
+            return handleException(new IntHandler().<X>inCaseOfGeneric().returnDefault(fallbackValue));
         }
 
         /**
@@ -326,15 +332,15 @@ public interface Checked<F, X extends Exception> {
          * <pre>
          *  handleException(new DoubleHandler()
          *      .&lt;X&gt;inCaseOfGeneric()
-         *      .supplyDefault(defaultValueSupplier)
+         *      .supplyDefault(fallbackValueSupplier)
          *  );
          * </pre>
          *
-         * @param defaultValueSupplier {@link DoubleSupplier} providing value to be returned
+         * @param fallbackValueSupplier {@link DoubleSupplier} providing value to be returned
          * @return enhanced {@link F interface}
          */
-        default F supplyDouble(DoubleSupplier defaultValueSupplier) {
-            return handleException(new DoubleHandler().<X>inCaseOfGeneric().supplyDefault(defaultValueSupplier));
+        default F supplyFallback(DoubleSupplier fallbackValueSupplier) {
+            return handleException(new DoubleHandler().<X>inCaseOfGeneric().supplyDefault(fallbackValueSupplier));
         }
 
         /**
@@ -344,15 +350,15 @@ public interface Checked<F, X extends Exception> {
          * <pre>
          *  handleException(new DoubleHandler()
          *      .&lt;X&gt;inCaseOfGeneric()
-         *      .returnDefault(defaultValue)
+         *      .returnDefault(fallback)
          *  );
          * </pre>
          *
-         * @param defaultValue value to be returned
+         * @param fallback value to be returned
          * @return enhanced {@link F interface}
          */
-        default F returnDouble(double defaultValue) {
-            return handleException(new DoubleHandler().<X>inCaseOfGeneric().returnDefault(defaultValue));
+        default F returnFallback(double fallback) {
+            return handleException(new DoubleHandler().<X>inCaseOfGeneric().returnDefault(fallback));
         }
 
         /**

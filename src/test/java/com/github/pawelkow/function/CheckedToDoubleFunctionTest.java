@@ -67,7 +67,7 @@ public class CheckedToDoubleFunctionTest {
     @Test
     public void verifyMethodChainUsability() {
         assertEquals(2.5d, Stream.of("a", "b", "c", "d", "e")
-                .mapToDouble(wrap(this::mapDangerously).returnDouble(0.5d))
+                .mapToDouble(wrap(this::mapDangerously).returnFallback(0.5d))
                 .reduce(0d, Double::sum));
     }
 

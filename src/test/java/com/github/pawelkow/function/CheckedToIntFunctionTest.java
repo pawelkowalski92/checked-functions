@@ -67,7 +67,7 @@ public class CheckedToIntFunctionTest {
     @Test
     public void verifyMethodChainUsability() {
         assertEquals(5, Stream.of("a", "b", "c", "d", "e")
-                .mapToInt(wrap(this::mapDangerously).returnInt(1))
+                .mapToInt(wrap(this::mapDangerously).returnFallback(1))
                 .reduce(0, Integer::sum));
     }
 
