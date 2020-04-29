@@ -134,7 +134,7 @@ public interface Checked<F, X extends Exception> {
          * @return enhanced {@link F interface}
          */
         default F supplyFallback(Supplier<? extends R> fallbackValueSupplier) {
-            return handleException(new ReferenceHandler<R>().<X>inCaseOfGeneric().supplyDefault(fallbackValueSupplier));
+            return handleException(new ReferenceHandler<R>().<X>inCaseOfGeneric().supplyValue(fallbackValueSupplier));
         }
 
         /**
@@ -152,7 +152,7 @@ public interface Checked<F, X extends Exception> {
          * @return enhanced {@link F interface}
          */
         default F returnFallback(R fallbackValue) {
-            return handleException(new ReferenceHandler<R>().<X>inCaseOfGeneric().returnDefault(fallbackValue));
+            return handleException(new ReferenceHandler<R>().<X>inCaseOfGeneric().returnValue(fallbackValue));
         }
 
         /**
@@ -237,7 +237,7 @@ public interface Checked<F, X extends Exception> {
          * @return enhanced {@link F interface}
          */
         default F supplyFallback(IntSupplier fallbackValueSupplier) {
-            return handleException(new IntHandler().<X>inCaseOfGeneric().supplyDefault(fallbackValueSupplier));
+            return handleException(new IntHandler().<X>inCaseOfGeneric().supplyInt(fallbackValueSupplier));
         }
 
         /**
@@ -255,7 +255,7 @@ public interface Checked<F, X extends Exception> {
          * @return enhanced {@link F interface}
          */
         default F returnFallback(int fallbackValue) {
-            return handleException(new IntHandler().<X>inCaseOfGeneric().returnDefault(fallbackValue));
+            return handleException(new IntHandler().<X>inCaseOfGeneric().returnInt(fallbackValue));
         }
 
         /**
@@ -340,7 +340,7 @@ public interface Checked<F, X extends Exception> {
          * @return enhanced {@link F interface}
          */
         default F supplyFallback(DoubleSupplier fallbackValueSupplier) {
-            return handleException(new DoubleHandler().<X>inCaseOfGeneric().supplyDefault(fallbackValueSupplier));
+            return handleException(new DoubleHandler().<X>inCaseOfGeneric().supplyDouble(fallbackValueSupplier));
         }
 
         /**
@@ -358,7 +358,7 @@ public interface Checked<F, X extends Exception> {
          * @return enhanced {@link F interface}
          */
         default F returnFallback(double fallback) {
-            return handleException(new DoubleHandler().<X>inCaseOfGeneric().returnDefault(fallback));
+            return handleException(new DoubleHandler().<X>inCaseOfGeneric().returnDouble(fallback));
         }
 
         /**
@@ -443,7 +443,7 @@ public interface Checked<F, X extends Exception> {
          * @return enhanced {@link F interface}
          */
         default F supplyLong(LongSupplier defaultValueSupplier) {
-            return handleException(new LongHandler().<X>inCaseOfGeneric().supplyDefault(defaultValueSupplier));
+            return handleException(new LongHandler().<X>inCaseOfGeneric().supplyLong(defaultValueSupplier));
         }
 
         /**
@@ -461,7 +461,7 @@ public interface Checked<F, X extends Exception> {
          * @return enhanced {@link F interface}
          */
         default F returnLong(long defaultValue) {
-            return handleException(new LongHandler().<X>inCaseOfGeneric().returnDefault(defaultValue));
+            return handleException(new LongHandler().<X>inCaseOfGeneric().returnLong(defaultValue));
         }
 
         /**
@@ -546,7 +546,7 @@ public interface Checked<F, X extends Exception> {
          * @return enhanced {@link F interface}
          */
         default F supplyBoolean(BooleanSupplier defaultValueSupplier) {
-            return handleException(new BooleanHandler().<X>inCaseOfGeneric().supplyDefault(defaultValueSupplier));
+            return handleException(new BooleanHandler().<X>inCaseOfGeneric().supplyBoolean(defaultValueSupplier));
         }
 
         /**
@@ -564,7 +564,7 @@ public interface Checked<F, X extends Exception> {
          * @return enhanced {@link F interface}
          */
         default F returnBoolean(boolean defaultValue) {
-            return handleException(new BooleanHandler().<X>inCaseOfGeneric().returnDefault(defaultValue));
+            return handleException(new BooleanHandler().<X>inCaseOfGeneric().returnBoolean(defaultValue));
         }
 
         /**

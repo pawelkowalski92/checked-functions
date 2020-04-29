@@ -43,7 +43,7 @@ public class ReferenceHandlerTest {
 
         //when
         Object returnedValue = new ReferenceHandler<>()
-                .inCaseOf(InterruptedException.class).returnDefault(defaultReference)
+                .inCaseOf(InterruptedException.class).returnValue(defaultReference)
                 .resolve(exception);
 
         //then
@@ -71,7 +71,7 @@ public class ReferenceHandlerTest {
     public void givenMultipleExceptionsWhenResolvingThenItsConsumed(Exception exception, ExceptionAbbreviation defaultReference) {
         //given
         ReferenceHandler<ExceptionAbbreviation> handler = new ReferenceHandler<ExceptionAbbreviation>()
-                .inCaseOf(IllegalArgumentException.class, ClassCastException.class, NoSuchMethodException.class).returnDefault(defaultReference);
+                .inCaseOf(IllegalArgumentException.class, ClassCastException.class, NoSuchMethodException.class).returnValue(defaultReference);
 
         //when
         ExceptionAbbreviation returnedReference = handler.resolve(exception);

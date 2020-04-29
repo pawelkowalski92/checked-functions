@@ -43,7 +43,7 @@ public class DoubleHandlerTest {
 
         //when
         double returnedValue = new DoubleHandler()
-                .inCaseOf(InterruptedException.class).returnDefault(defaultValue)
+                .inCaseOf(InterruptedException.class).returnDouble(defaultValue)
                 .resolve(exception);
 
         //then
@@ -71,7 +71,7 @@ public class DoubleHandlerTest {
     public void givenMultipleExceptionsWhenResolvingThenItsConsumed(Exception exception, double defaultValue) {
         //given
         DoubleHandler handler = new DoubleHandler()
-                .inCaseOf(IllegalArgumentException.class, ClassCastException.class, NoSuchMethodException.class).returnDefault(defaultValue);
+                .inCaseOf(IllegalArgumentException.class, ClassCastException.class, NoSuchMethodException.class).returnDouble(defaultValue);
 
         //when
         double returnedValue = handler.resolve(exception);

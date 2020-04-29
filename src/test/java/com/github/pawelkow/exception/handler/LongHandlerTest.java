@@ -43,7 +43,7 @@ public class LongHandlerTest {
 
         //when
         long returnedValue = new LongHandler()
-                .inCaseOf(InterruptedException.class).returnDefault(defaultValue)
+                .inCaseOf(InterruptedException.class).returnLong(defaultValue)
                 .resolve(exception);
 
         //then
@@ -71,7 +71,7 @@ public class LongHandlerTest {
     public void givenMultipleExceptionsWhenResolvingThenItsConsumed(Exception exception, long defaultValue) {
         //given
         LongHandler handler = new LongHandler()
-                .inCaseOf(IllegalArgumentException.class, ClassCastException.class, NoSuchMethodException.class).returnDefault(defaultValue);
+                .inCaseOf(IllegalArgumentException.class, ClassCastException.class, NoSuchMethodException.class).returnLong(defaultValue);
 
         //when
         long returnedValue = handler.resolve(exception);

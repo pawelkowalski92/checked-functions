@@ -43,7 +43,7 @@ public class IntHandlerTest {
 
         //when
         int returnedValue = new IntHandler()
-                .inCaseOf(InterruptedException.class).returnDefault(defaultValue)
+                .inCaseOf(InterruptedException.class).returnInt(defaultValue)
                 .resolve(exception);
 
         //then
@@ -71,7 +71,7 @@ public class IntHandlerTest {
     public void givenMultipleExceptionsWhenResolvingThenItsConsumed(Exception exception, int defaultValue) {
         //given
         IntHandler handler = new IntHandler()
-                .inCaseOf(IllegalArgumentException.class, ClassCastException.class, NoSuchMethodException.class).returnDefault(defaultValue);
+                .inCaseOf(IllegalArgumentException.class, ClassCastException.class, NoSuchMethodException.class).returnInt(defaultValue);
 
         //when
         int returnedValue = handler.resolve(exception);

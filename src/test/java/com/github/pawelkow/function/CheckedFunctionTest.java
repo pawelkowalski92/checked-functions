@@ -64,7 +64,7 @@ public class CheckedFunctionTest {
     @Test
     public void verifyMethodChainUsability() {
         assertEquals("xxxxx", Stream.of("a", "b", "c", "d", "e")
-                .map(wrap(this::mapDangerously).returnValue("x"))
+                .map(wrap(this::mapDangerously).returnFallback("x"))
                 .collect(joining()));
     }
 
