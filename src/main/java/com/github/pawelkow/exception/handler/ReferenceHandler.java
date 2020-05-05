@@ -26,7 +26,7 @@ public class ReferenceHandler<R> extends ExceptionHandler<ReferenceResolver<R>> 
      * @param <X> the type of exception to be resolved
      * @return {@link ReferenceHandler.Configurer configurer}
      */
-    public <X extends Throwable> Configurer<X> inCaseOfGeneric() {
+    public <X extends Throwable> Configurer<X> inCaseOf() {
         return new Configurer<>();
     }
 
@@ -46,7 +46,7 @@ public class ReferenceHandler<R> extends ExceptionHandler<ReferenceResolver<R>> 
      *
      * @return {@link ReferenceHandler.Configurer configurer}
      */
-    public Configurer<Throwable> ifNoneMatch() {
+    public Configurer<Throwable> inAnyCase() {
         return inCaseOf(Throwable.class);
     }
 

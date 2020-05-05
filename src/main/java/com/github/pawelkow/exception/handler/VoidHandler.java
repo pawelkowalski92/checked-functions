@@ -22,7 +22,7 @@ public class VoidHandler extends ExceptionHandler<VoidResolver> implements VoidR
      * @param <X> the type of exception to be resolved
      * @return {@link VoidHandler.Configurer configurer}
      */
-    public <X extends Throwable> Configurer<X> inCaseOfGeneric() {
+    public <X extends Throwable> Configurer<X> inCaseOf() {
         return new Configurer<>();
     }
 
@@ -42,7 +42,7 @@ public class VoidHandler extends ExceptionHandler<VoidResolver> implements VoidR
      *
      * @return {@link VoidHandler.Configurer configurer}
      */
-    public Configurer<Throwable> ifNoneMatch() {
+    public Configurer<Throwable> inAnyCase() {
         return inCaseOf(Throwable.class);
     }
 

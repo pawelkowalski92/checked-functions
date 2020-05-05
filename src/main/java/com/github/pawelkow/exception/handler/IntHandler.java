@@ -25,7 +25,7 @@ public class IntHandler extends ExceptionHandler<IntResolver> implements IntReso
      * @param <X> the type of exception to be resolved
      * @return {@link IntHandler.Configurer configurer}
      */
-    public <X extends Throwable> Configurer<X> inCaseOfGeneric() {
+    public <X extends Throwable> Configurer<X> inCaseOf() {
         return new Configurer<>();
     }
 
@@ -45,7 +45,7 @@ public class IntHandler extends ExceptionHandler<IntResolver> implements IntReso
      *
      * @return {@link IntHandler.Configurer configurer}
      */
-    public Configurer<Throwable> ifNoneMatch() {
+    public Configurer<Throwable> inAnyCase() {
         return inCaseOf(Throwable.class);
     }
 

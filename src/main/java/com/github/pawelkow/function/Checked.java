@@ -84,7 +84,7 @@ public interface Checked<F, X extends Exception> {
          */
         @Override
         default F handleException(Consumer<? super X> exceptionHandler) {
-            return handleException(new ReferenceHandler<R>().<X>inCaseOfGeneric().handle(exceptionHandler).discard());
+            return handleException(new ReferenceHandler<R>().<X>inCaseOf().handle(exceptionHandler).discard());
         }
 
         /**
@@ -100,7 +100,7 @@ public interface Checked<F, X extends Exception> {
          */
         @Override
         default F rethrowException(Function<? super X, ? extends RuntimeException> exceptionMapper) {
-            return handleException(new ReferenceHandler<R>().<X>inCaseOfGeneric().rethrow(exceptionMapper));
+            return handleException(new ReferenceHandler<R>().<X>inCaseOf().rethrow(exceptionMapper));
         }
 
         /**
@@ -116,7 +116,7 @@ public interface Checked<F, X extends Exception> {
          */
         @Override
         default F discardException() {
-            return handleException(new ReferenceHandler<R>().<X>inCaseOfGeneric().discard());
+            return handleException(new ReferenceHandler<R>().<X>inCaseOf().discard());
         }
 
         /**
@@ -134,7 +134,7 @@ public interface Checked<F, X extends Exception> {
          * @return enhanced {@link F interface}
          */
         default F supplyFallback(Supplier<? extends R> fallbackValueSupplier) {
-            return handleException(new ReferenceHandler<R>().<X>inCaseOfGeneric().supplyValue(fallbackValueSupplier));
+            return handleException(new ReferenceHandler<R>().<X>inCaseOf().supplyValue(fallbackValueSupplier));
         }
 
         /**
@@ -152,7 +152,7 @@ public interface Checked<F, X extends Exception> {
          * @return enhanced {@link F interface}
          */
         default F returnFallback(R fallbackValue) {
-            return handleException(new ReferenceHandler<R>().<X>inCaseOfGeneric().returnValue(fallbackValue));
+            return handleException(new ReferenceHandler<R>().<X>inCaseOf().returnValue(fallbackValue));
         }
 
         /**
@@ -187,7 +187,7 @@ public interface Checked<F, X extends Exception> {
          */
         @Override
         default F handleException(Consumer<? super X> exceptionHandler) {
-            return handleException(new IntHandler().<X>inCaseOfGeneric().handle(exceptionHandler).discard());
+            return handleException(new IntHandler().<X>inCaseOf().handle(exceptionHandler).discard());
         }
 
         /**
@@ -203,7 +203,7 @@ public interface Checked<F, X extends Exception> {
          */
         @Override
         default F rethrowException(Function<? super X, ? extends RuntimeException> exceptionMapper) {
-            return handleException(new IntHandler().<X>inCaseOfGeneric().rethrow(exceptionMapper));
+            return handleException(new IntHandler().<X>inCaseOf().rethrow(exceptionMapper));
         }
 
         /**
@@ -219,7 +219,7 @@ public interface Checked<F, X extends Exception> {
          */
         @Override
         default F discardException() {
-            return handleException(new IntHandler().<X>inCaseOfGeneric().discard());
+            return handleException(new IntHandler().<X>inCaseOf().discard());
         }
 
         /**
@@ -237,7 +237,7 @@ public interface Checked<F, X extends Exception> {
          * @return enhanced {@link F interface}
          */
         default F supplyFallback(IntSupplier fallbackValueSupplier) {
-            return handleException(new IntHandler().<X>inCaseOfGeneric().supplyInt(fallbackValueSupplier));
+            return handleException(new IntHandler().<X>inCaseOf().supplyInt(fallbackValueSupplier));
         }
 
         /**
@@ -255,7 +255,7 @@ public interface Checked<F, X extends Exception> {
          * @return enhanced {@link F interface}
          */
         default F returnFallback(int fallbackValue) {
-            return handleException(new IntHandler().<X>inCaseOfGeneric().returnInt(fallbackValue));
+            return handleException(new IntHandler().<X>inCaseOf().returnInt(fallbackValue));
         }
 
         /**
@@ -290,7 +290,7 @@ public interface Checked<F, X extends Exception> {
          */
         @Override
         default F handleException(Consumer<? super X> exceptionHandler) {
-            return handleException(new DoubleHandler().<X>inCaseOfGeneric().handle(exceptionHandler).discard());
+            return handleException(new DoubleHandler().<X>inCaseOf().handle(exceptionHandler).discard());
         }
 
         /**
@@ -306,7 +306,7 @@ public interface Checked<F, X extends Exception> {
          */
         @Override
         default F rethrowException(Function<? super X, ? extends RuntimeException> exceptionMapper) {
-            return handleException(new DoubleHandler().<X>inCaseOfGeneric().rethrow(exceptionMapper));
+            return handleException(new DoubleHandler().<X>inCaseOf().rethrow(exceptionMapper));
         }
 
         /**
@@ -322,7 +322,7 @@ public interface Checked<F, X extends Exception> {
          */
         @Override
         default F discardException() {
-            return handleException(new DoubleHandler().<X>inCaseOfGeneric().discard());
+            return handleException(new DoubleHandler().<X>inCaseOf().discard());
         }
 
         /**
@@ -340,7 +340,7 @@ public interface Checked<F, X extends Exception> {
          * @return enhanced {@link F interface}
          */
         default F supplyFallback(DoubleSupplier fallbackValueSupplier) {
-            return handleException(new DoubleHandler().<X>inCaseOfGeneric().supplyDouble(fallbackValueSupplier));
+            return handleException(new DoubleHandler().<X>inCaseOf().supplyDouble(fallbackValueSupplier));
         }
 
         /**
@@ -358,7 +358,7 @@ public interface Checked<F, X extends Exception> {
          * @return enhanced {@link F interface}
          */
         default F returnFallback(double fallback) {
-            return handleException(new DoubleHandler().<X>inCaseOfGeneric().returnDouble(fallback));
+            return handleException(new DoubleHandler().<X>inCaseOf().returnDouble(fallback));
         }
 
         /**
@@ -393,7 +393,7 @@ public interface Checked<F, X extends Exception> {
          */
         @Override
         default F handleException(Consumer<? super X> exceptionHandler) {
-            return handleException(new LongHandler().<X>inCaseOfGeneric().handle(exceptionHandler).discard());
+            return handleException(new LongHandler().<X>inCaseOf().handle(exceptionHandler).discard());
         }
 
         /**
@@ -409,7 +409,7 @@ public interface Checked<F, X extends Exception> {
          */
         @Override
         default F rethrowException(Function<? super X, ? extends RuntimeException> exceptionMapper) {
-            return handleException(new LongHandler().<X>inCaseOfGeneric().rethrow(exceptionMapper));
+            return handleException(new LongHandler().<X>inCaseOf().rethrow(exceptionMapper));
         }
 
         /**
@@ -425,7 +425,7 @@ public interface Checked<F, X extends Exception> {
          */
         @Override
         default F discardException() {
-            return handleException(new LongHandler().<X>inCaseOfGeneric().discard());
+            return handleException(new LongHandler().<X>inCaseOf().discard());
         }
 
         /**
@@ -443,7 +443,7 @@ public interface Checked<F, X extends Exception> {
          * @return enhanced {@link F interface}
          */
         default F supplyLong(LongSupplier defaultValueSupplier) {
-            return handleException(new LongHandler().<X>inCaseOfGeneric().supplyLong(defaultValueSupplier));
+            return handleException(new LongHandler().<X>inCaseOf().supplyLong(defaultValueSupplier));
         }
 
         /**
@@ -461,7 +461,7 @@ public interface Checked<F, X extends Exception> {
          * @return enhanced {@link F interface}
          */
         default F returnLong(long defaultValue) {
-            return handleException(new LongHandler().<X>inCaseOfGeneric().returnLong(defaultValue));
+            return handleException(new LongHandler().<X>inCaseOf().returnLong(defaultValue));
         }
 
         /**
@@ -496,7 +496,7 @@ public interface Checked<F, X extends Exception> {
          */
         @Override
         default F handleException(Consumer<? super X> exceptionHandler) {
-            return handleException(new BooleanHandler().<X>inCaseOfGeneric().handle(exceptionHandler).discard());
+            return handleException(new BooleanHandler().<X>inCaseOf().handle(exceptionHandler).discard());
         }
 
         /**
@@ -512,7 +512,7 @@ public interface Checked<F, X extends Exception> {
          */
         @Override
         default F rethrowException(Function<? super X, ? extends RuntimeException> exceptionMapper) {
-            return handleException(new BooleanHandler().<X>inCaseOfGeneric().rethrow(exceptionMapper));
+            return handleException(new BooleanHandler().<X>inCaseOf().rethrow(exceptionMapper));
         }
 
         /**
@@ -528,7 +528,7 @@ public interface Checked<F, X extends Exception> {
          */
         @Override
         default F discardException() {
-            return handleException(new BooleanHandler().<X>inCaseOfGeneric().discard());
+            return handleException(new BooleanHandler().<X>inCaseOf().discard());
         }
 
         /**
@@ -546,7 +546,7 @@ public interface Checked<F, X extends Exception> {
          * @return enhanced {@link F interface}
          */
         default F supplyBoolean(BooleanSupplier defaultValueSupplier) {
-            return handleException(new BooleanHandler().<X>inCaseOfGeneric().supplyBoolean(defaultValueSupplier));
+            return handleException(new BooleanHandler().<X>inCaseOf().supplyBoolean(defaultValueSupplier));
         }
 
         /**
@@ -564,7 +564,7 @@ public interface Checked<F, X extends Exception> {
          * @return enhanced {@link F interface}
          */
         default F returnBoolean(boolean defaultValue) {
-            return handleException(new BooleanHandler().<X>inCaseOfGeneric().returnBoolean(defaultValue));
+            return handleException(new BooleanHandler().<X>inCaseOf().returnBoolean(defaultValue));
         }
 
         /**
@@ -599,7 +599,7 @@ public interface Checked<F, X extends Exception> {
          */
         @Override
         default F handleException(Consumer<? super X> exceptionHandler) {
-            return handleException(new VoidHandler().<X>inCaseOfGeneric().handle(exceptionHandler).discard());
+            return handleException(new VoidHandler().<X>inCaseOf().handle(exceptionHandler).discard());
         }
 
         /**
@@ -615,7 +615,7 @@ public interface Checked<F, X extends Exception> {
          */
         @Override
         default F rethrowException(Function<? super X, ? extends RuntimeException> exceptionMapper) {
-            return handleException(new VoidHandler().<X>inCaseOfGeneric().rethrow(exceptionMapper));
+            return handleException(new VoidHandler().<X>inCaseOf().rethrow(exceptionMapper));
         }
 
         /**
@@ -631,7 +631,7 @@ public interface Checked<F, X extends Exception> {
          */
         @Override
         default F discardException() {
-            return handleException(new VoidHandler().<X>inCaseOfGeneric().discard());
+            return handleException(new VoidHandler().<X>inCaseOf().discard());
         }
 
         /**
