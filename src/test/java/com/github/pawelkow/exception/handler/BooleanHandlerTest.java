@@ -10,17 +10,16 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class IntHandlerTest {
+public class BooleanHandlerTest {
 
     @SuppressWarnings("unused")
     private static Stream<Arguments> getMultipleExceptions() {
         return Stream.of(
-                Arguments.of(new IllegalArgumentException("IAE"), 1),
-                Arguments.of(new ClassCastException("CCE"), 2),
-                Arguments.of(new NoSuchMethodException("NSME"), 3)
+                Arguments.of(new IllegalArgumentException("IAE"), true),
+                Arguments.of(new ClassCastException("CCE"), false),
+                Arguments.of(new NoSuchMethodException("NSME"), true)
         );
     }
 
@@ -30,7 +29,7 @@ public class IntHandlerTest {
         IOException exception = new IOException("Checked io exception");
 
         //and
-        IntHandler handler = new IntHandler()
+        BooleanHandler handler = new BooleanHandler()
                 .inCaseOf(IOException.class).rethrow(UncheckedIOException::new);
 
         //when
@@ -43,15 +42,15 @@ public class IntHandlerTest {
     @Test
     public void givenCheckedExceptionWhenResolvingThenReturnsValue() {
         //given
-        int defaultValue = -5;
+        boolean defaultValue = Character.isUpperCase('A');
         InterruptedException exception = new InterruptedException();
 
         //and
-        IntHandler handler = new IntHandler()
-                .inCaseOf(InterruptedException.class).returnInt(defaultValue);
+        BooleanHandler handler = new BooleanHandler()
+                .inCaseOf(InterruptedException.class).returnBoolean(defaultValue);
 
         //when
-        int returnedValue = handler.resolve(exception);
+        boolean returnedValue = handler.resolve(exception);
 
         //then
         assertEquals(defaultValue, returnedValue);
@@ -63,25 +62,25 @@ public class IntHandlerTest {
         ClassNotFoundException exception = new ClassNotFoundException("Checked exception");
 
         //and
-        IntHandler handler = new IntHandler()
+        BooleanHandler handler = new BooleanHandler()
                 .inCaseOf(ReflectiveOperationException.class).discard();
 
         //when
-        int emptyValue = handler.resolve(exception);
+        boolean emptyValue = handler.resolve(exception);
 
         //then
-        assertEquals(0, emptyValue);
+        assertFalse(emptyValue);
     }
 
     @ParameterizedTest
     @MethodSource("getMultipleExceptions")
-    public void givenMultipleExceptionsWhenResolvingThenItsConsumed(Exception exception, int defaultValue) {
+    public void givenMultipleExceptionsWhenResolvingThenItsConsumed(Exception exception, boolean defaultValue) {
         //given
-        IntHandler handler = new IntHandler()
-                .inCaseOf(IllegalArgumentException.class, ClassCastException.class, NoSuchMethodException.class).returnInt(defaultValue);
+        BooleanHandler handler = new BooleanHandler()
+                .inCaseOf(IllegalArgumentException.class, ClassCastException.class, NoSuchMethodException.class).returnBoolean(defaultValue);
 
         //when
-        int returnedValue = handler.resolve(exception);
+        boolean returnedValue = handler.resolve(exception);
 
         //then
         assertEquals(defaultValue, returnedValue);
@@ -93,7 +92,7 @@ public class IntHandlerTest {
         IllegalStateException exception = new IllegalStateException("notConfigured");
 
         //and
-        IntHandler handler = new IntHandler();
+        BooleanHandler handler = new BooleanHandler();
 
         //when
         Executable resolve = () -> handler.resolve(exception);

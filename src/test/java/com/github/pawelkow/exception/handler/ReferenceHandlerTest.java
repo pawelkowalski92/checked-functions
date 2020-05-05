@@ -1,6 +1,7 @@
 package com.github.pawelkow.exception.handler;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -27,12 +28,15 @@ public class ReferenceHandlerTest {
         //given
         IOException exception = new IOException("Checked io exception");
 
-        //when
+        //and
         ReferenceHandler<?> handler = new ReferenceHandler<>()
                 .inCaseOf(IOException.class).rethrow(UncheckedIOException::new);
 
+        //when
+        Executable resolve = () -> handler.resolve(exception);
+
         //then
-        assertThrows(UncheckedIOException.class, () -> handler.resolve(exception));
+        assertThrows(UncheckedIOException.class, resolve);
     }
 
     @Test
@@ -41,10 +45,12 @@ public class ReferenceHandlerTest {
         Object defaultReference = new Object();
         InterruptedException exception = new InterruptedException();
 
+        //and
+        ReferenceHandler<?> handler = new ReferenceHandler<>()
+                .inCaseOf(InterruptedException.class).returnValue(defaultReference);
+
         //when
-        Object returnedValue = new ReferenceHandler<>()
-                .inCaseOf(InterruptedException.class).returnValue(defaultReference)
-                .resolve(exception);
+        Object returnedValue = handler.resolve(exception);
 
         //then
         assertEquals(defaultReference, returnedValue);
@@ -55,15 +61,16 @@ public class ReferenceHandlerTest {
         //given
         ClassNotFoundException exception = new ClassNotFoundException("Checked exception");
 
-        //when
+        //and
         ReferenceHandler<?> handler = new ReferenceHandler<>()
                 .inCaseOf(ReflectiveOperationException.class).discard();
 
+        //when
+        Object emptyValue = handler.resolve(exception);
+
         //then
-        assertDoesNotThrow(() -> {
-            Object emptyValue = handler.resolve(exception);
-            assertNull(emptyValue);
-        });
+        assertNull(emptyValue);
+
     }
 
     @ParameterizedTest
@@ -85,11 +92,14 @@ public class ReferenceHandlerTest {
         //given
         IllegalStateException exception = new IllegalStateException("notConfigured");
 
-        //when
+        //and
         ReferenceHandler<?> handler = new ReferenceHandler<>();
 
+        //when
+        Executable resolve = () -> handler.resolve(exception);
+
         //then
-        assertThrows(ExceptionHandlerMisconfigurationException.class, () -> handler.resolve(exception));
+        assertThrows(ExceptionHandlerMisconfigurationException.class, resolve);
     }
 
     private enum ExceptionAbbreviation {

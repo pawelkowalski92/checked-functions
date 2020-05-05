@@ -1,6 +1,7 @@
 package com.github.pawelkow.exception.handler;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -9,7 +10,8 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class LongHandlerTest {
 
@@ -27,12 +29,15 @@ public class LongHandlerTest {
         //given
         IOException exception = new IOException("Checked io exception");
 
-        //when
+        //and
         LongHandler handler = new LongHandler()
                 .inCaseOf(IOException.class).rethrow(UncheckedIOException::new);
 
+        //when
+        Executable resolve = () -> handler.resolve(exception);
+
         //then
-        assertThrows(UncheckedIOException.class, () -> handler.resolve(exception));
+        assertThrows(UncheckedIOException.class, resolve);
     }
 
     @Test
@@ -41,10 +46,12 @@ public class LongHandlerTest {
         long defaultValue = -5L;
         InterruptedException exception = new InterruptedException();
 
+        //and
+        LongHandler handler = new LongHandler()
+                .inCaseOf(InterruptedException.class).returnLong(defaultValue);
+
         //when
-        long returnedValue = new LongHandler()
-                .inCaseOf(InterruptedException.class).returnLong(defaultValue)
-                .resolve(exception);
+        long returnedValue = handler.resolve(exception);
 
         //then
         assertEquals(defaultValue, returnedValue);
@@ -55,15 +62,15 @@ public class LongHandlerTest {
         //given
         ClassNotFoundException exception = new ClassNotFoundException("Checked exception");
 
-        //when
+        //and
         LongHandler handler = new LongHandler()
                 .inCaseOf(ReflectiveOperationException.class).discard();
 
+        //when
+        long emptyValue = handler.resolve(exception);
+
         //then
-        assertDoesNotThrow(() -> {
-            long emptyValue = handler.resolve(exception);
-            assertEquals(0L, emptyValue);
-        });
+        assertEquals(0L, emptyValue);
     }
 
     @ParameterizedTest
@@ -85,11 +92,14 @@ public class LongHandlerTest {
         //given
         IllegalStateException exception = new IllegalStateException("notConfigured");
 
-        //when
+        //and
         LongHandler handler = new LongHandler();
 
+        //when
+        Executable resolve = () -> handler.resolve(exception);
+
         //then
-        assertThrows(ExceptionHandlerMisconfigurationException.class, () -> handler.resolve(exception));
+        assertThrows(ExceptionHandlerMisconfigurationException.class, resolve);
     }
 
 }

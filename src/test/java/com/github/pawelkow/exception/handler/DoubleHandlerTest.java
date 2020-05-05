@@ -1,6 +1,7 @@
 package com.github.pawelkow.exception.handler;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -9,7 +10,8 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class DoubleHandlerTest {
 
@@ -27,12 +29,15 @@ public class DoubleHandlerTest {
         //given
         IOException exception = new IOException("Checked io exception");
 
-        //when
+        //and
         DoubleHandler handler = new DoubleHandler()
                 .inCaseOf(IOException.class).rethrow(UncheckedIOException::new);
 
+        //when
+        Executable resolve = () -> handler.resolve(exception);
+
         //then
-        assertThrows(UncheckedIOException.class, () -> handler.resolve(exception));
+        assertThrows(UncheckedIOException.class, resolve);
     }
 
     @Test
@@ -41,10 +46,12 @@ public class DoubleHandlerTest {
         double defaultValue = 10.5d;
         InterruptedException exception = new InterruptedException();
 
+        //and
+        DoubleHandler handler = new DoubleHandler()
+                .inCaseOf(InterruptedException.class).returnDouble(defaultValue);
+
         //when
-        double returnedValue = new DoubleHandler()
-                .inCaseOf(InterruptedException.class).returnDouble(defaultValue)
-                .resolve(exception);
+        double returnedValue = handler.resolve(exception);
 
         //then
         assertEquals(defaultValue, returnedValue);
@@ -55,15 +62,15 @@ public class DoubleHandlerTest {
         //given
         ClassNotFoundException exception = new ClassNotFoundException("Checked exception");
 
-        //when
+        //and
         DoubleHandler handler = new DoubleHandler()
                 .inCaseOf(ReflectiveOperationException.class).discard();
 
+        //when
+        double emptyValue = handler.resolve(exception);
+
         //then
-        assertDoesNotThrow(() -> {
-            double emptyValue = handler.resolve(exception);
-            assertEquals(Double.NaN, emptyValue);
-        });
+        assertEquals(Double.NaN, emptyValue);
     }
 
     @ParameterizedTest
@@ -85,11 +92,14 @@ public class DoubleHandlerTest {
         //given
         IllegalStateException exception = new IllegalStateException("notConfigured");
 
-        //when
+        //and
         DoubleHandler handler = new DoubleHandler();
 
+        //when
+        Executable resolve = () -> handler.resolve(exception);
+
         //then
-        assertThrows(ExceptionHandlerMisconfigurationException.class, () -> handler.resolve(exception));
+        assertThrows(ExceptionHandlerMisconfigurationException.class, resolve);
     }
 
 }

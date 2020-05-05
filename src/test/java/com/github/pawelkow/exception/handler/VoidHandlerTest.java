@@ -1,6 +1,7 @@
 package com.github.pawelkow.exception.handler;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -29,26 +30,31 @@ public class VoidHandlerTest {
         //given
         IOException exception = new IOException("Checked io exception");
 
-        //when
+        //and
         VoidHandler handler = new VoidHandler()
                 .inCaseOf(IOException.class).rethrow(UncheckedIOException::new);
 
+        //when
+        Executable resolve = () -> handler.resolve(exception);
+
         //then
-        assertThrows(UncheckedIOException.class, () -> handler.resolve(exception));
+        assertThrows(UncheckedIOException.class, resolve);
     }
 
     @Test
     public void givenCheckedExceptionWhenResolvingThenItsConsumed() {
         //given
         StringWriter writer = new StringWriter();
+        PrintWriter printer = new PrintWriter(writer);
         InterruptedException exception = new InterruptedException();
 
+        //and
+        VoidHandler handler = new VoidHandler()
+                .inCaseOf(InterruptedException.class).handle(printer::print).discard();
+
         //when
-        try (PrintWriter printer = new PrintWriter(writer)) {
-            new VoidHandler()
-                    .inCaseOf(InterruptedException.class).handle(printer::print).discard()
-                    .resolve(exception);
-        }
+        handler.resolve(exception);
+        printer.close();
 
         //then
         assertEquals(exception.toString(), writer.toString());
@@ -59,12 +65,15 @@ public class VoidHandlerTest {
         //given
         ClassNotFoundException exception = new ClassNotFoundException("Checked exception");
 
-        //when
+        //and
         VoidHandler handler = new VoidHandler()
                 .inCaseOf(ReflectiveOperationException.class).discard();
 
+        //when
+        Executable resolve = () -> handler.resolve(exception);
+
         //then
-        assertDoesNotThrow(() -> handler.resolve(exception));
+        assertDoesNotThrow(resolve);
     }
 
     @ParameterizedTest
@@ -72,11 +81,16 @@ public class VoidHandlerTest {
     public void givenMultipleExceptionsWhenResolvingThenItsConsumed(Exception exception, String cause) {
         //given
         StringWriter writer = new StringWriter();
+        PrintWriter printer = new PrintWriter(writer);
+
+        //and
         VoidHandler handler = new VoidHandler()
-                .inCaseOf(IllegalArgumentException.class, ClassCastException.class, NoSuchMethodException.class).handle(ex -> writer.write(ex.getMessage())).discard();
+                .inCaseOf(IllegalArgumentException.class, ClassCastException.class, NoSuchMethodException.class)
+                .handle(ex -> printer.print(ex.getMessage())).discard();
 
         //when
         handler.resolve(exception);
+        printer.close();
 
         //then
         assertEquals(cause, writer.toString());
@@ -87,11 +101,14 @@ public class VoidHandlerTest {
         //given
         IllegalStateException exception = new IllegalStateException("notConfigured");
 
-        //when
+        //and
         VoidHandler handler = new VoidHandler();
 
+        //when
+        Executable resolve = () -> handler.resolve(exception);
+
         //then
-        assertThrows(ExceptionHandlerMisconfigurationException.class, () -> handler.resolve(exception));
+        assertThrows(ExceptionHandlerMisconfigurationException.class, resolve);
     }
 
 }
