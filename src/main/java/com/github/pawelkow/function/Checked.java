@@ -42,7 +42,7 @@ public interface Checked<F, X extends Exception> {
      * Apply <strong>consuming</strong> strategy against possible exceptions.
      *
      * @param exceptionHandler {@link Consumer} that handles the exception
-     * @return enhanced {@link F interface}
+     * @return enhanced interface
      */
     F handleException(Consumer<? super X> exceptionHandler);
 
@@ -50,14 +50,14 @@ public interface Checked<F, X extends Exception> {
      * Apply <strong>rethrowing</strong> strategy against possible exceptions.
      *
      * @param exceptionMapper {@link Function} that transforms exception into an {@link RuntimeException unchecked} one
-     * @return enhanced {@link F interface}
+     * @return enhanced interface
      */
     F rethrowException(Function<? super X, ? extends RuntimeException> exceptionMapper);
 
     /**
      * Apply <strong>discarding</strong> strategy against possible exceptions.
      *
-     * @return enhanced {@link F interface}
+     * @return enhanced interface
      */
     F discardException();
 
@@ -131,7 +131,7 @@ public interface Checked<F, X extends Exception> {
          * </pre>
          *
          * @param fallbackValueSupplier {@link Supplier} providing value to be returned
-         * @return enhanced {@link F interface}
+         * @return enhanced interface
          */
         default F supplyFallback(Supplier<? extends R> fallbackValueSupplier) {
             return handleException(new ReferenceHandler<R>().<X>inCaseOf().supplyValue(fallbackValueSupplier));
@@ -149,7 +149,7 @@ public interface Checked<F, X extends Exception> {
          * </pre>
          *
          * @param fallbackValue value to be returned
-         * @return enhanced {@link F interface}
+         * @return enhanced interface
          */
         default F returnFallback(R fallbackValue) {
             return handleException(new ReferenceHandler<R>().<X>inCaseOf().returnValue(fallbackValue));
@@ -159,7 +159,7 @@ public interface Checked<F, X extends Exception> {
          * Determine and apply proper strategy against possible exceptions based on suitable resolver.
          *
          * @param resolver {@link ReferenceResolver exception resolver} capable of providing object references as fallback values
-         * @return enhanced {@link F interface}
+         * @return enhanced interface
          */
         F handleException(ReferenceResolver<? extends R> resolver);
 
@@ -234,7 +234,7 @@ public interface Checked<F, X extends Exception> {
          * </pre>
          *
          * @param fallbackValueSupplier {@link IntSupplier} providing value to be returned
-         * @return enhanced {@link F interface}
+         * @return enhanced interface
          */
         default F supplyFallback(IntSupplier fallbackValueSupplier) {
             return handleException(new IntHandler().<X>inCaseOf().supplyInt(fallbackValueSupplier));
@@ -252,7 +252,7 @@ public interface Checked<F, X extends Exception> {
          * </pre>
          *
          * @param fallbackValue value to be returned
-         * @return enhanced {@link F interface}
+         * @return enhanced interface
          */
         default F returnFallback(int fallbackValue) {
             return handleException(new IntHandler().<X>inCaseOf().returnInt(fallbackValue));
@@ -262,7 +262,7 @@ public interface Checked<F, X extends Exception> {
          * Determine and apply proper strategy against possible exceptions based on suitable resolver.
          *
          * @param resolver {@link IntResolver exception resolver} capable of providing int primitives as fallback values
-         * @return enhanced {@link F interface}
+         * @return enhanced interface
          */
         F handleException(IntResolver resolver);
 
@@ -337,7 +337,7 @@ public interface Checked<F, X extends Exception> {
          * </pre>
          *
          * @param fallbackValueSupplier {@link DoubleSupplier} providing value to be returned
-         * @return enhanced {@link F interface}
+         * @return enhanced interface
          */
         default F supplyFallback(DoubleSupplier fallbackValueSupplier) {
             return handleException(new DoubleHandler().<X>inCaseOf().supplyDouble(fallbackValueSupplier));
@@ -355,7 +355,7 @@ public interface Checked<F, X extends Exception> {
          * </pre>
          *
          * @param fallback value to be returned
-         * @return enhanced {@link F interface}
+         * @return enhanced interface
          */
         default F returnFallback(double fallback) {
             return handleException(new DoubleHandler().<X>inCaseOf().returnDouble(fallback));
@@ -365,7 +365,7 @@ public interface Checked<F, X extends Exception> {
          * Determine and apply proper strategy against possible exceptions based on suitable resolver.
          *
          * @param resolver {@link DoubleResolver exception resolver} capable of providing double primitives as fallback values
-         * @return enhanced {@link F interface}
+         * @return enhanced interface
          */
         F handleException(DoubleResolver resolver);
 
@@ -440,7 +440,7 @@ public interface Checked<F, X extends Exception> {
          * </pre>
          *
          * @param defaultValueSupplier {@link LongSupplier} providing value to be returned
-         * @return enhanced {@link F interface}
+         * @return enhanced interface
          */
         default F supplyLong(LongSupplier defaultValueSupplier) {
             return handleException(new LongHandler().<X>inCaseOf().supplyLong(defaultValueSupplier));
@@ -458,7 +458,7 @@ public interface Checked<F, X extends Exception> {
          * </pre>
          *
          * @param defaultValue value to be returned
-         * @return enhanced {@link F interface}
+         * @return enhanced interface
          */
         default F returnLong(long defaultValue) {
             return handleException(new LongHandler().<X>inCaseOf().returnLong(defaultValue));
@@ -468,7 +468,7 @@ public interface Checked<F, X extends Exception> {
          * Determine and apply proper strategy against possible exceptions based on suitable resolver.
          *
          * @param resolver {@link LongResolver exception resolver} capable of providing long primitives as fallback values
-         * @return enhanced {@link F interface}
+         * @return enhanced interface
          */
         F handleException(LongResolver resolver);
 
@@ -543,7 +543,7 @@ public interface Checked<F, X extends Exception> {
          * </pre>
          *
          * @param defaultValueSupplier {@link BooleanSupplier} providing value to be returned
-         * @return enhanced {@link F interface}
+         * @return enhanced interface
          */
         default F supplyBoolean(BooleanSupplier defaultValueSupplier) {
             return handleException(new BooleanHandler().<X>inCaseOf().supplyBoolean(defaultValueSupplier));
@@ -561,7 +561,7 @@ public interface Checked<F, X extends Exception> {
          * </pre>
          *
          * @param defaultValue value to be returned
-         * @return enhanced {@link F interface}
+         * @return enhanced interface
          */
         default F returnBoolean(boolean defaultValue) {
             return handleException(new BooleanHandler().<X>inCaseOf().returnBoolean(defaultValue));
@@ -571,7 +571,7 @@ public interface Checked<F, X extends Exception> {
          * Determine and apply proper strategy against possible exceptions based on suitable resolver.
          *
          * @param resolver {@link BooleanResolver exception resolver} capable of providing boolean primitives as fallback values
-         * @return enhanced {@link F interface}
+         * @return enhanced interface
          */
         F handleException(BooleanResolver resolver);
 
@@ -638,7 +638,7 @@ public interface Checked<F, X extends Exception> {
          * Determine and apply proper strategy against possible exceptions based on suitable resolver.
          *
          * @param resolver {@link VoidResolver exception resolver} capable of consuming the exception without returning anything
-         * @return enhanced {@link F interface}
+         * @return enhanced interface
          */
         F handleException(VoidResolver resolver);
 

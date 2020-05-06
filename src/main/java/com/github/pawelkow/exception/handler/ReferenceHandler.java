@@ -93,7 +93,7 @@ public class ReferenceHandler<R> extends ExceptionHandler<ReferenceResolver<R>> 
          * @return {@link ReferenceHandler} for further configuration
          */
         public ReferenceHandler<R> mapToValue(Function<? super X, ? extends R> exceptionMapper) {
-            registerResolver(new ReferenceResolver<>() {
+            registerResolver(new ReferenceResolver<R>() {
                 @Override
                 public boolean isSupported(Throwable exception) {
                     return Configurer.this.isConfiguredFor(exception);

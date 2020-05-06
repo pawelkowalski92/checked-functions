@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.github.pawelkow.function.CheckedSupplier.wrap;
+import static java.util.Collections.singletonList;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CheckedSupplierTest {
@@ -65,7 +66,7 @@ public class CheckedSupplierTest {
 
         //then
         assertDoesNotThrow(() -> strings.add(supplier.get()));
-        assertIterableEquals(List.of("OK"), strings);
+        assertIterableEquals(singletonList("OK"), strings);
     }
 
     @Test
